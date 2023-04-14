@@ -1,4 +1,4 @@
-package eu.petrfaruzel.collapsibletopbar
+package eu.petrfaruzel.example
 
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -25,9 +26,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import eu.petrfaruzel.collapsibletopbar.ui.theme.CollapsibleTopBarTheme
+import eu.petrfaruzel.collapsibletopbar.CollapsibleScaffold
+import eu.petrfaruzel.collapsibletopbar.CollapsibleTopAppBar
+import eu.petrfaruzel.collapsibletopbar.R
+import eu.petrfaruzel.example.ui.theme.CollapsibleTopBarTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +69,10 @@ fun ExampleScreen() {
                     ) {
                         IconButton(
                             onClick = {
-                                Log.d("TAG", "OnBackClick")
+                                Log.d(
+                                    "TAG",
+                                    "OnBackClick"
+                                )
                             }) {
                             Icon(
                                 Icons.Filled.Share,
@@ -91,7 +99,10 @@ fun ExampleScreen() {
             )
         }
     ) { insets ->
-        LazyColumn(state = listState, contentPadding = insets) {
+        LazyColumn(
+            state = listState,
+            contentPadding = insets
+        ) {
             items(100) {
                 Card(
                     modifier = Modifier
@@ -100,8 +111,10 @@ fun ExampleScreen() {
                         .height(80.dp)
                 ) {
                     Text(
-                        text = "Item $it",
-                        modifier = Modifier.fillMaxSize()
+                        text = "Item ${it + 1}",
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxSize().wrapContentHeight(align = Alignment.CenterVertically)
                     )
                 }
             }

@@ -2,7 +2,7 @@ package eu.petrfaruzel.collapsibletopbar
 
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 
-class CollapsibleTopAppBarScope(
+class CollapsibleTopBarScope(
     val fraction: Float,
     scope: BoxWithConstraintsScope
 ) : BoxWithConstraintsScope by scope

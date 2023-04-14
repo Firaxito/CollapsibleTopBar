@@ -78,6 +78,7 @@ fun CollapsibleTopAppBar(
         DefaultCollapsibleTopAppBarTitle(
             text = title,
             fraction = fraction,
+            maxHeight = maxHeight,
             modifier = modifier
                 .align(Alignment.CenterStart)
                 .padding(
@@ -98,8 +99,8 @@ fun CollapsibleTopAppBar(
     maxHeight: MutableState<Dp>,
     onBack: (() -> Unit) = { },
     actions: (@Composable RowScope.() -> Unit)? = null,
-    labelContent: @Composable CollapsibleTopAppBarScope.() -> Unit = {},
-    content: (@Composable CollapsibleTopAppBarScope.() -> Unit) = { }
+    labelContent: @Composable CollapsibleTopBarScope.() -> Unit = {},
+    content: (@Composable CollapsibleTopBarScope.() -> Unit) = { }
 ) {
     CollapsibleTopAppBar(
         modifier = modifier,
@@ -120,8 +121,8 @@ fun CollapsibleTopAppBar(
     maxHeight: MutableState<Dp>,
     actions: (@Composable RowScope.() -> Unit)? = null,
     navigationIcon: (@Composable () -> Unit)? = null,
-    labelContent: @Composable CollapsibleTopAppBarScope.() -> Unit = {},
-    content: (@Composable CollapsibleTopAppBarScope.() -> Unit) = { }
+    labelContent: @Composable CollapsibleTopBarScope.() -> Unit = {},
+    content: (@Composable CollapsibleTopBarScope.() -> Unit) = { }
 ) {
     CollapsibleTopAppBarInternal(
         maxHeight = remember { maxHeight },
@@ -144,8 +145,8 @@ private fun CollapsibleTopAppBarInternal(
     minHeight: Dp = DEFAULT_MIN_HEIGHT,
     navigationIcon: (@Composable () -> Unit)? = null,
     actions: (@Composable RowScope.() -> Unit)? = null,
-    labelContent: @Composable CollapsibleTopAppBarScope.() -> Unit,
-    titleContent: @Composable CollapsibleTopAppBarScope.() -> Unit
+    labelContent: @Composable CollapsibleTopBarScope.() -> Unit,
+    titleContent: @Composable CollapsibleTopBarScope.() -> Unit
 ) {
     val density = LocalDensity.current
     val navIconSize = remember { mutableStateOf(IntSize.Zero) }
@@ -207,7 +208,7 @@ private fun CollapsibleTopAppBarInternal(
                 fraction,
                 this
             ) {
-                CollapsibleTopAppBarScope(
+                CollapsibleTopBarScope(
                     fraction = fraction,
                     scope = this
                 )
@@ -257,7 +258,7 @@ private fun CollapsibleTopAppBarInternal(
                     fraction,
                     this
                 ) {
-                    CollapsibleTopAppBarScope(
+                    CollapsibleTopBarScope(
                         fraction = fraction,
                         scope = this
                     )
@@ -290,10 +291,10 @@ private fun getFractionWithDelay(
 }
 
 @Composable
-fun DefaultCollapsibleTopAppBarTitle(text: String?, fraction: Float, modifier: Modifier = Modifier) {
+fun DefaultCollapsibleTopAppBarTitle(text: String?, fraction: Float, maxHeight: MutableState<Dp>, modifier: Modifier = Modifier) {
     Text(
         text = text ?: "",
-        modifier = modifier,
+        modifier = modifier.heightIn(max = maxHeight.value - DEFAULT_MIN_HEIGHT + TITLE_EXPANDED_VERTICAL_PADDING), // TODO Replace constant
         fontSize = lerp(
             16.sp,
             24.sp,
@@ -301,7 +302,7 @@ fun DefaultCollapsibleTopAppBarTitle(text: String?, fraction: Float, modifier: M
         ),
         textAlign = TextAlign.Start,
         overflow = TextOverflow.Ellipsis,
-        maxLines = if (fraction < 0.4) 1 else if (fraction < 0.75) 2 else Int.MAX_VALUE, // TODO might rewrite
+        maxLines = if (fraction < 0.4) 1 else if (fraction < 0.65) 2 else Int.MAX_VALUE,
     )
 }
 
@@ -316,7 +317,7 @@ fun DefaultTopAppBarBackIcon(
         }) {
         Icon(
             Icons.Filled.ArrowBack,
-            stringResource(id = R.string.app_name)
+            stringResource(id = R.string.cd_go_back)
         )
     }
 }

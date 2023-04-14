@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
+
 package eu.petrfaruzel.collapsibletopbar
 
 import androidx.compose.foundation.ScrollState

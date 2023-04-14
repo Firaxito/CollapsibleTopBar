@@ -13,7 +13,7 @@
         android:theme="@style/Theme.CollapsibleTopBar"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name="eu.petrfaruzel.example.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.CollapsibleTopBar">
             <intent-filter>
